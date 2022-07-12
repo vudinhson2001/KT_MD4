@@ -13,37 +13,303 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div id="content"></div>
 <div class="container">
-<div class="row"><div class="col-12">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link">Disabled</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#" onclick="ShowAddForm()">Thêm Mới</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
         </div>
-    </nav>
+        <div class="row mt3">
+            <div class="col-12">
+                <table class="table table-dark" style="width: 1000px">
+                    <h1>List City</h1>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"> Thành Phố</th>
+                        <th scope="col">Quốc Gia</th>
+                        <th scope="col"></th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="list">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row mt3">
-<div class="col-12"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Mới Thành Phố</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <label>Thành Phố</label>
+                    <input type="text" name="name" id="name" placeholder="Nhập tên thành phố" class="form-control"><br>
+                    <label>Quốc Gia</label>
+                    <select id="country" class="form-control">
+                        <option value="1">Nhật Bản</option>
+                        <option value="2">Thái Lan</option>
+                    </select>
+                    <label>Diện Tích</label>
+                    <input type="text" name="area" id="area" placeholder="Nhập diện tích" class="form-control"><br>
+                    <label>Dân Số</label>
+                    <input type="text" name="population" id="population" placeholder="Nhập dân số" class="form-control"><br>
+                    <label>GDP</label>
+                    <input type="text" name="gdp" id="gdp" placeholder="Nhập chỉ số GDP" class="form-control"><br>
+                    <label>Mô Tả</label>
+                    <input type="text" name="description" id="description" placeholder="Mô tả thành phố "
+                           class="form-control"><br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="save()">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Thêm Mới Thành Phố</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="id">
+                    <label>Thành Phố</label>
+                    <input type="text" name="name" id="nameEdit" placeholder="Nhập tên thành phố"
+                           class="form-control"><br>
+                    <label>Quốc Gia</label>
+                    <select id="countryEdit" class="form-control">
+                        <option value="1">Nhật Bản</option>
+                        <option value="2">Thái Lan</option>
+                        <option value="3">Việt Nam</option>
+
+
+                    </select>
+                    <label>Diện Tích</label>
+                    <input type="text" name="area" id="areaEdit" placeholder="Nhập diện tích" class="form-control"><br>
+                    <label>Dân Số</label>
+                    <input type="text" name="population" id="populationEdit" placeholder="Nhập dân số"
+                           class="form-control"><br>
+                    <label>GDP</label>
+                    <input type="text" name="gdp" id="gdpEdit" placeholder="Nhập chỉ số GDP" class="form-control"><br>
+                    <label>Mô Tả</label>
+                    <input type="text" name="description" id="descriptionEdit" placeholder="Mô tả thành phố "
+                           class="form-control"><br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="edit()">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
+<script>
+    let tbody = document.getElementById("list")
+    let addForm = document.getElementById("addForm")
+    let editForm = document.getElementById("editForm")
+    let content = document.getElementById("content")
+    loadData()
+
+    function loadData() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/city",
+            success: function (data) {
+                loadTableProduct(data);
+            }
+        })
+    }
+
+    function loadTableProduct(data) {
+        let str = ""
+        for (let i = 0; i < data.length; i++) {
+            str += `  <tr>
+            <th scope="row">${i + 1}</th>
+            <td><a href="#" onclick="viewDetail(${data[i].id})">${data[i].name}</a></td>
+            <td>${data[i].country.name}</td>
+
+            <td><button  class="btn btn-primary" onclick="showEdit(${data[i].id})"> Sửa</button></td>
+            <td><button  class="btn btn-danger" onclick="deleteCity(${data[i].id})">Xóa</button></td>
+
+        </tr>`
+
+        }
+        tbody.innerHTML = str;
+    }
+    function viewDetail(id){
+        $.ajax ({
+            type: "GET",
+            url: "http://localhost:8080/city/" + id,
+            success: function (data) {
+                console.log(data)
+                let str = `<h1>Thanh pho ${data.name}</h1>
+    <button onclick="loadData()">Xem danh sach thanh pho</button>
+    <p>Ten: ${data.name}</p>
+    <p>Quoc gia: ${data.country.name}</p>
+    <p>Dien tich: ${data.area}</p>
+    <p>Dan so: ${data.population}</p>
+    <p>GDP: ${data.gdp}</p>
+    <p>Gioi thieu: </p>
+    <p>${data.description}</p>
+    <button onclick="showEdit(${data.id})">Chỉnh Sửa</button>
+    <button onclick="deleteCity(${data.id})">Xóa</button>`
+                content.innerHTML = str
+            }
+        })
+    }
+    function ShowAddForm() {
+        $('#exampleModal').modal('show');
+    }
+
+    function save() {
+        let name = document.getElementById("name").value;
+        let country = document.getElementById("country").value;
+        let area = document.getElementById("area").value;
+        let population = document.getElementById("population").value;
+        let gdp = document.getElementById("gdp").value;
+        let description = document.getElementById("description").value;
+        let city = {
+            name: name,
+            country: {
+                id: country
+            },
+            area: area,
+            population: population,
+            gdp: gdp,
+            description: description
+        }
+
+
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/city",
+            data: JSON.stringify(city),
+            success: function () {
+                loadData();
+                $('#exampleModal').modal('hide');
+                addForm.reset();
+            },
+            errors: function (error) {
+                console.log(error)
+            }
+        })
+    }
+function showEdit(id) {
+    $('#exampleModal1').modal('show');
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/city/" + id,
+        success: function (data) {
+            console.log(data);
+            document.getElementById('id').value = data.id;
+
+            document.getElementById('nameEdit').value = data.name;
+            document.getElementById('countryEdit').value = data.country;
+            document.getElementById('areaEdit').value = data.area;
+            document.getElementById('populationEdit').value = data.population;
+            document.getElementById('gdpEdit').value = data.gdp;
+            document.getElementById('descriptionEdit').value = data.description;
+        }
+    })
+}
+    function edit() {
+        let id= document.getElementById('id').value;
+        let name = document.getElementById("nameEdit").value;
+        let country = document.getElementById("countryEdit").value;
+        let area = document.getElementById("areaEdit").value;
+        let population = document.getElementById("populationEdit").value;
+        let gdp = document.getElementById("gdpEdit").value;
+        let description = document.getElementById("descriptionEdit").value;
+        let city = {
+            name: name,
+            country: {
+                id: country
+            },
+            area: area,
+            population: population,
+            gdp: gdp,
+            description: description
+        }
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "PUT",
+            url: "http://localhost:8080/city/"+id,
+            data: JSON.stringify(city),
+            success: function () {
+                $('#exampleModal1').modal('hide');
+                loadData();
+            },
+            errors: function (error) {
+                console.log(error)
+            }
+        })
+    }
+    function deleteCity(id) {
+        if (confirm("Bạn chắc chắn xóa thành phố này chứ ????")){
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/city/" + id,
+                success: function () {
+                    loadData()
+                },
+                errors: function (){
+                    console.log()
+                }
+            })
+        }
+
+    }
+</script>
 </body>
 </html>
